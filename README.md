@@ -9,7 +9,7 @@
 
 - install air `go install github.com/cosmtrek/air@latest` untuk menjalankan golang dengan mode development
 - install package `go mod download`
-- set port di dengan perintah `set PORT=5000` untuk os windows atau `export PORT=5000` untuk os linux/macos
+- set port di dengan perintah `set PORT=3030` untuk os windows atau `export PORT=3030` untuk os linux/macos
 - jalankan projek dengan perintah `go run main.go` atau `air` untuk mode development
 
 # Menjalankan unit testing dengan docker
@@ -25,11 +25,11 @@ docker build . -t golang-hello
 ```
 
 ## Jalankan docker image
-Jalankan docker image dengan perintah `docker run -e PORT=5000 -p 5000:5000 {docker image}`
+Jalankan docker image dengan perintah `docker run -e PORT=3030 -p 3030:3030 {docker image}`
 
 contoh: 
 ```
-docker run -e PORT=5000 -p 5000:5000 golang-hello
+docker run -e PORT=3030 -p 3030:3030 golang-hello
 ```
 
 ### Jalankan unit testing
@@ -37,7 +37,7 @@ docker run -e PORT=5000 -p 5000:5000 golang-hello
 pastikan port ketika menjalankan docker image sama dengan `API_URL` ketika ingin menjalankan unit testing
 
 ```
-docker run --network="host" -e API_URL=http://localhost:5000 alfi08/hello-unit-testing
+docker run --network="host" -e API_URL=http://localhost:3030 alfi08/hello-unit-testing
 ```
 
 
