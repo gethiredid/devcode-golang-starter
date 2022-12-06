@@ -14,7 +14,7 @@ func main() {
 	router := mux.NewRouter()
 
 	if port == "" {
-		port = "5000"
+		port = "3030"
 	}
 
 	router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
@@ -22,6 +22,6 @@ func main() {
 		json.NewEncoder(w).Encode(map[string]string{"message": "Hello world"})
 	})
 
-	log.Println("API is running on port 5000")
+	log.Println("API is running on port 3030")
 	http.ListenAndServe(":"+port, router)
 }
