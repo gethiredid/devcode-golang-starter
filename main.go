@@ -7,13 +7,15 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
 )
 
 type Contact struct {
-	Id           int    `json:"id"`
-	Full_name    string `json:"full_name"`
-	Phone_number string `json:"phone_number"`
-	Email        string `json:"email"`
+	Id           int64  `gorm:"primaryKey" json:"id"`
+	Full_name    string `gorm:"type:varchar(255)" json:"full_name"`
+	Phone_number string `gorm:"type:varchar(255)" json:"phone_number"`
+	Email        string `gorm:"type:varchar(255)" json:"email"`
 }
 
 type ResItems struct {
@@ -29,14 +31,20 @@ type ResItem struct {
 }
 
 func main() {
+	var DB *gorm.DB
+	db, err := gorm.Open(mysql.Open("root:@tcp(127.0.0.1:3306)/go_contacts"))
+	if err != nil {
+		panic(err)
+	}
+	db.AutoMigrate(&Contact{})
+	DB = db
+
 	port := os.Getenv("PORT")
 	router := mux.NewRouter()
 
 	if port == "" {
 		port = "3030"
 	}
-
-	var contacts []Contact
 
 	router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -50,14 +58,17 @@ func main() {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
-		res := ResItems{
-			Status: "Success",
-			Items:  contacts,
+		var contacts []Contact
+
+		if err := DB.Find(&contacts).Error; err == nil {
+			res := ResItems{
+				Status: "Success",
+				Items:  contacts,
+			}
+
+			response, _ := json.Marshal(res)
+			w.Write(response)
 		}
-
-		response, _ := json.Marshal(res)
-
-		w.Write(response)
 	}).Methods("GET")
 
 	// create contacts
@@ -67,20 +78,20 @@ func main() {
 
 		var newContact Contact
 		err := json.NewDecoder(r.Body).Decode(&newContact)
-		newContact.Id = len(contacts) + 1
 
 		if err == nil {
-			contacts = append(contacts, newContact)
+			if err := DB.Create(&newContact).Error; err == nil {
+				res := ResItem{
+					Status:  "Success",
+					Message: "Contact created",
+					Item:    newContact,
+				}
 
-			res := ResItem{
-				Status:  "Success",
-				Message: "Contact created",
-				Item:    newContact,
+				response, _ := json.Marshal(res)
+
+				w.Write(response)
 			}
 
-			response, _ := json.Marshal(res)
-
-			w.Write(response)
 		}
 
 	}).Methods("POST")
