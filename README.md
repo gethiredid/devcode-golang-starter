@@ -8,7 +8,7 @@
 ## Menjalankan projek
 
 - install air `go install github.com/cosmtrek/air@latest` untuk menjalankan golang dengan mode development
-- install package `go mod download`
+- install package `go mod tidy`
 - set port di dengan perintah `set PORT=3030` untuk os windows atau `export PORT=3030` untuk os linux/macos
 - jalankan projek dengan perintah `go run main.go` atau `air` untuk mode development
 
