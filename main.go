@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	"gorm.io/driver/mysql"
@@ -12,10 +13,10 @@ import (
 )
 
 type Contact struct {
-	Id           int64  `gorm:"primaryKey" json:"id"`
-	Full_name    string `gorm:"type:varchar(255)" json:"full_name"`
-	Phone_number string `gorm:"type:varchar(255)" json:"phone_number"`
-	Email        string `gorm:"type:varchar(255)" json:"email"`
+	Id           int64  `gorm:"primaryKey" json:"id,omitempty"`
+	Full_name    string `gorm:"type:varchar(255)" json:"full_name,omitempty"`
+	Phone_number string `gorm:"type:varchar(255)" json:"phone_number,omitempty"`
+	Email        string `gorm:"type:varchar(255)" json:"email,omitempty"`
 }
 
 type ResItems struct {
@@ -25,9 +26,10 @@ type ResItems struct {
 }
 
 type ResItem struct {
-	Status  string  `json:"status"`
-	Message string  `json:"message,omitempty"`
-	Item    Contact `json:"data"`
+	Status    string  `json:"status"`
+	Message   string  `json:"message,omitempty"`
+	Item      Contact `json:"data,omitempty"`
+	DeletedId int64   `json:"deletedId,omitempty"`
 }
 
 func main() {
@@ -95,6 +97,59 @@ func main() {
 		}
 
 	}).Methods("POST")
+
+	// update contact
+	router.HandleFunc("/contacts/{id}", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+
+		vars := mux.Vars(r)
+		id, _ := strconv.ParseInt(vars["id"], 10, 64)
+
+		var contact Contact
+		json.NewDecoder(r.Body).Decode(&contact)
+
+		DB.Where("id = ?", id).Updates(&contact)
+
+		contact.Id = id
+
+		res := ResItem{
+			Status:  "Success",
+			Message: "Contact updated",
+			Item:    contact,
+		}
+
+		response, _ := json.Marshal(res)
+
+		w.Write(response)
+
+	}).Methods("PUT")
+
+	// delete contact
+	router.HandleFunc("/contacts/{id}", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+
+		vars := mux.Vars(r)
+		id, _ := strconv.ParseInt(vars["id"], 10, 64)
+		// input := map[string]string{"id": ""}
+		var contact Contact
+
+		json.NewDecoder(r.Body).Decode(&contact)
+
+		DB.Delete(&contact, id)
+
+		res := ResItem{
+			Status:    "Success",
+			Message:   "Contact deleted",
+			DeletedId: id,
+		}
+
+		response, _ := json.Marshal(res)
+
+		w.Write(response)
+
+	}).Methods("DELETE")
 
 	log.Println("API is running on port 3030")
 	http.ListenAndServe(":"+port, router)
