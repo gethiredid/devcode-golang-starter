@@ -75,25 +75,45 @@ func main() {
 
 	// create contacts
 	router.HandleFunc("/contacts", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
 
+		// validate body request
 		var newContact Contact
-		err := json.NewDecoder(r.Body).Decode(&newContact)
+		json.NewDecoder(r.Body).Decode(&newContact)
+		if len(newContact.Email) <= 0 || len(newContact.Full_name) <= 0 || len(newContact.Phone_number) <= 0 {
+			res := map[string]string{"message": "full_name, phone_number, and email is required", "status": "Failed"}
+			response, _ := json.Marshal(res)
 
-		if err == nil {
-			if err := DB.Create(&newContact).Error; err == nil {
-				res := ResItem{
-					Status:  "Success",
-					Message: "Contact created",
-					Item:    newContact,
-				}
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(response)
+			return
+		}
 
-				response, _ := json.Marshal(res)
+		// check if data already exist
+		var contact Contact
+		DB.Where("email = ?", newContact.Email).Where("full_name = ?", newContact.Full_name).Where("phone_number", newContact.Phone_number).First(&contact)
+		if len(contact.Email) > 0 || len(contact.Full_name) > 0 || len(contact.Phone_number) > 0 {
+			res := map[string]string{"message": "full_name, phone_number, and email is duplicate", "status": "Failed"}
+			response, _ := json.Marshal(res)
 
-				w.Write(response)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(response)
+			return
+		}
+
+		if err := DB.Create(&newContact).Error; err == nil {
+			res := ResItem{
+				Status:  "Success",
+				Message: "Contact created",
+				Item:    newContact,
 			}
 
+			response, _ := json.Marshal(res)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusOK)
+			w.Write(response)
 		}
 
 	}).Methods("POST")
