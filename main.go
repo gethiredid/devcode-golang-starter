@@ -126,17 +126,40 @@ func main() {
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
 
+		// validate body request
+		var updateData Contact
+		json.NewDecoder(r.Body).Decode(&updateData)
+		if len(updateData.Email) <= 0 && len(updateData.Full_name) <= 0 && len(updateData.Phone_number) <= 0 {
+			res := map[string]string{"message": "fno contact updated", "status": "Failed"}
+			response, _ := json.Marshal(res)
+
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(response)
+			return
+		}
+
+		// check if contact not found
 		var contact Contact
-		json.NewDecoder(r.Body).Decode(&contact)
+		if err := DB.First(&contact, id).Error; err != nil {
+			message := "Contact with id " + strconv.Itoa(int(id)) + " is not found"
+			res := map[string]string{"message": message, "status": "Failed"}
+			response, _ := json.Marshal(res)
 
-		DB.Where("id = ?", id).Updates(&contact)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(response)
+			return
+		}
 
-		contact.Id = id
+		// update contact
+		DB.Where("id = ?", id).Updates(&updateData)
+		updateData.Id = id
 
 		res := ResItem{
 			Status:  "Success",
 			Message: "Contact updated",
-			Item:    contact,
+			Item:    updateData,
 		}
 
 		response, _ := json.Marshal(res)
@@ -152,11 +175,21 @@ func main() {
 
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
+		// check if contact not found
 		var contact Contact
+		if err := DB.First(&contact, id).Error; err != nil {
+			message := "Contact with id " + strconv.Itoa(int(id)) + " is not found"
+			res := map[string]string{"message": message, "status": "Failed"}
+			response, _ := json.Marshal(res)
 
-		json.NewDecoder(r.Body).Decode(&contact)
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write(response)
+			return
+		}
 
-		DB.Delete(&contact, id)
+		var removeContact Contact
+		DB.Delete(&removeContact, id)
 
 		res := ResItem{
 			Status:    "Success",
