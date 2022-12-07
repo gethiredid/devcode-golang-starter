@@ -120,8 +120,6 @@ func main() {
 
 	// update contact
 	router.HandleFunc("/contacts/{id}", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
 
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
@@ -130,7 +128,7 @@ func main() {
 		var updateData Contact
 		json.NewDecoder(r.Body).Decode(&updateData)
 		if len(updateData.Email) <= 0 && len(updateData.Full_name) <= 0 && len(updateData.Phone_number) <= 0 {
-			res := map[string]string{"message": "fno contact updated", "status": "Failed"}
+			res := map[string]string{"message": "no contact updated", "status": "Failed"}
 			response, _ := json.Marshal(res)
 
 			w.Header().Set("Content-Type", "application/json")
@@ -164,14 +162,14 @@ func main() {
 
 		response, _ := json.Marshal(res)
 
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
 		w.Write(response)
 
 	}).Methods("PUT")
 
 	// delete contact
 	router.HandleFunc("/contacts/{id}", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
 
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
@@ -199,6 +197,8 @@ func main() {
 
 		response, _ := json.Marshal(res)
 
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
 		w.Write(response)
 
 	}).Methods("DELETE")
