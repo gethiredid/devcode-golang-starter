@@ -132,7 +132,6 @@ func main() {
 
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
-		// input := map[string]string{"id": ""}
 		var contact Contact
 
 		json.NewDecoder(r.Body).Decode(&contact)
