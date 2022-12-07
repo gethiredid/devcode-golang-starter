@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -33,20 +34,30 @@ type ResItem struct {
 }
 
 func main() {
+	// load env
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
+	// get env
+	PORT := getEnv("PORT", "3030")
+	MYSQL_USER := getEnv("MYSQL_USER", "root")
+	MYSQL_PASSWORD := getEnv("MYSQL_PASSWORD", "")
+	MYSQL_HOST := getEnv("MYSQL_HOST", "127.0.0.1")
+	MYSQL_PORT := getEnv("MYSQL_PORT", "3306")
+	MYSQL_DBNAME := getEnv("MYSQL_DBNAME", "dbname")
+
 	var DB *gorm.DB
-	db, err := gorm.Open(mysql.Open("root:@tcp(127.0.0.1:3306)/go_contacts"))
+	conString := MYSQL_USER + ":" + MYSQL_PASSWORD + "@tcp(" + MYSQL_HOST + ":" + MYSQL_PORT + ")/" + MYSQL_DBNAME
+	db, err := gorm.Open(mysql.Open(conString))
 	if err != nil {
 		panic(err)
 	}
 	db.AutoMigrate(&Contact{})
 	DB = db
 
-	port := os.Getenv("PORT")
 	router := mux.NewRouter()
-
-	if port == "" {
-		port = "3030"
-	}
 
 	router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -203,6 +214,14 @@ func main() {
 
 	}).Methods("DELETE")
 
-	log.Println("API is running on port 3030")
-	http.ListenAndServe(":"+port, router)
+	log.Println("API is running on port " + PORT)
+	http.ListenAndServe(":"+PORT, router)
+}
+
+func getEnv(key, defaultValue string) string {
+	value := os.Getenv(key)
+	if len(value) > 0 {
+		return value
+	}
+	return defaultValue
 }
