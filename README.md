@@ -29,7 +29,8 @@ Jika anda sudah menginstall docker, anda bisa menjalankan perintah `docker-compo
 
 Apabila ada perubahan pada file kodingan anda, anda bisa build ulang container dengan perintah :
 ```
-docker-compose up -d --force --recreate
+docker-compose up -d --build --force-recreate
+```
 
 ## Menjalankan projek
 
@@ -41,6 +42,14 @@ docker-compose up -d --force --recreate
 
 ## Migration
 
+Projek ini menggunakan package `gorm` untuk mengurus database.
+Migrasi table berada di file `main.go`.
+
+Anda dapat membuat table migrasi dengan menggunakan `struct`, contohnya adal pada bagian `type Contact struct {...}` di file `main.go`.
+
+Migrasi dijalankan dengan AutoMigrate pada gorm, contoh `db.AutoMigrate(&Contact{})`.
+
+Untuk lebih lengkap anda bisa mengunjungi [link ini](https://gorm.io/docs/models.html) .
 
 
 # Menjalankan unit testing dengan docker
