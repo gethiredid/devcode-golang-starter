@@ -1,4 +1,4 @@
-# Devcode golang starter with mux - Level 1
+# Devcode golang starter with mux
 
 ## Tools yang di perlukan
 
