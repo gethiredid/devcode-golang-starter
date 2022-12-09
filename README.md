@@ -1,5 +1,21 @@
 # Devcode golang starter with mux - Level 2
 
+
+## Hasil akhir yang diharapkan
+
+Peserta dapat membuat dan menampilkan data kontak yang dengan variabel lokal.
+
+## Instruksi pengerjaan
+
+Terdapat 2 route pada file `app.js` yaitu :
+
+- GET `/contacts`
+- POST `/contacts`
+
+Anda dapat mengubah route tersebut agar request dan response sesuai dengan [dokumentasi API](https://documenter.getpostman.com/view/6584319/2s8Yt1rUtN) pada postman.
+
+Pastikan juga semua test berhasil ketika menjalankan unit testing lokal.
+
 ## Tools yang di perlukan
 
 - Git

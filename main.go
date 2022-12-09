@@ -55,9 +55,10 @@ func main() {
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 
+		// TODO: ambil semua data kontak dari variabel contacts
+
 		res := ResItems{
 			Status: "Success",
-			Items:  contacts,
 		}
 
 		response, _ := json.Marshal(res)
@@ -75,7 +76,7 @@ func main() {
 		newContact.Id = len(contacts) + 1
 
 		if err == nil {
-			contacts = append(contacts, newContact)
+			// TODO: simpan data dari request body kedalam variabel contacts
 
 			res := ResItem{
 				Status:  "Success",
