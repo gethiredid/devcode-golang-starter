@@ -1,5 +1,22 @@
 # Devcode golang starter with mux - Level 5
 
+## Hasil akhir yang diharapkan
+
+Peserta dapat memvalidasi data dari request body sebelum data tersebut disimpan ke database.
+
+## Instruksi pengerjaan
+
+Terdapat 4 route pada file `main.go` yaitu :
+
+-   GET `/contacts`
+-   POST `/contacts`
+-   PUT `/contacts/{id}`
+-   DELETE `/contacts/{id}`
+
+Anda dapat mengubah route tersebut agar request dan response sesuai dengan [dokumentasi API](https://documenter.getpostman.com/view/6584319/2s8Yt1rUtN) pada postman. Anda bisa melihat contoh response dan request pada dokumentasi postman yang diawali dengan `FAILED: ...` untuk mengetahui apa saja yang di validasi.
+
+Pastikan juga semua test berhasil ketika menjalankan unit testing lokal.
+
 
 ## Tools yang di perlukan
 
