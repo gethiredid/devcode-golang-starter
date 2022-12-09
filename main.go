@@ -52,7 +52,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	db.AutoMigrate(&Contact{})
+	db.AutoMigrate(&Contact{}) // 👈 run migration
 	DB = db
 
 	router := mux.NewRouter()
@@ -71,15 +71,15 @@ func main() {
 
 		var contacts []Contact
 
-		if err := DB.Find(&contacts).Error; err == nil {
-			res := ResItems{
-				Status: "Success",
-				Items:  contacts,
-			}
+		// TODO: ambil semua data kontak dari database
 
-			response, _ := json.Marshal(res)
-			w.Write(response)
+		res := ResItems{
+			Status: "Success",
+			Items:  contacts,
 		}
+
+		response, _ := json.Marshal(res)
+		w.Write(response)
 	}).Methods("GET")
 
 	// create contacts
@@ -88,22 +88,19 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 
 		var newContact Contact
-		err := json.NewDecoder(r.Body).Decode(&newContact)
+		json.NewDecoder(r.Body).Decode(&newContact)
 
-		if err == nil {
-			if err := DB.Create(&newContact).Error; err == nil {
-				res := ResItem{
-					Status:  "Success",
-					Message: "Contact created",
-					Item:    newContact,
-				}
+		// TODO: simpan data dari request body kedalam database
 
-				response, _ := json.Marshal(res)
-
-				w.Write(response)
-			}
-
+		res := ResItem{
+			Status:  "Success",
+			Message: "Contact created",
+			Item:    newContact,
 		}
+
+		response, _ := json.Marshal(res)
+
+		w.Write(response)
 
 	}).Methods("POST")
 
