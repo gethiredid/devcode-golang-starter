@@ -7,7 +7,7 @@ Peserta dapat membuat dan menampilkan data kontak yang dengan variabel lokal.
 
 ## Instruksi pengerjaan
 
-Terdapat 2 route pada file `app.js` yaitu :
+Terdapat 2 route pada file `main.go` yaitu :
 
 - GET `/contacts`
 - POST `/contacts`
