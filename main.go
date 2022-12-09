@@ -117,12 +117,9 @@ func main() {
 		vars := mux.Vars(r)
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
 
+		// TODO: edit data (full_name/email/phone_number) pada database berdasarkan id nya
+
 		var contact Contact
-		json.NewDecoder(r.Body).Decode(&contact)
-
-		DB.Where("id = ?", id).Updates(&contact)
-
-		contact.Id = id
 
 		res := ResItem{
 			Status:  "Success",
@@ -145,9 +142,7 @@ func main() {
 		id, _ := strconv.ParseInt(vars["id"], 10, 64)
 		var contact Contact
 
-		json.NewDecoder(r.Body).Decode(&contact)
-
-		DB.Delete(&contact, id)
+		// TODO: hapus data pada database berdasarkan id nya
 
 		res := ResItem{
 			Status:    "Success",
