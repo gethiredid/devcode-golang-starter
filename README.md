@@ -1,6 +1,6 @@
 # Devcode Starter using Golang and Mux Level 1
 
-## Hasil akhir yang Diharapkan
+## Hasil Akhir yang Diharapkan
 
 Peserta dapat menampilkan message hello world dalam format JSON pada url http://localhost:3030/hello dan submit challenge di Devcode menggunakan Docker
 
@@ -14,7 +14,7 @@ Peserta dapat menampilkan message hello world dalam format JSON pada url http://
 6. Jalankan `go mod download` pada terminal untuk install packages
 7. Jalankan `go run main.go` atau `air` untuk mode development pada terminal
 
-## Instruksi pengerjaan
+## Instruksi Pengerjaan
 
 1. Pastikan anda sudah meng-install tools yang diperlukan. Jika belum, silahkan ikuti langkah-langkahnya [disini](#menginstal-tools-yang-diperlukan)
 2. Jalankan API dan Database dengan Docker, silahkan ikuti langkah-langkahnya [disini](#menjalankan-api-dan-database-dengan-docker)
@@ -22,7 +22,7 @@ Peserta dapat menampilkan message hello world dalam format JSON pada url http://
 4. Push projek ke docker hub setelah semua test case berhasil dijalankan, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 5. Submit image docker yang telah dipush ke Docker Hub ke Halaman Submission Devcode, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 
-## Tools dan Packages yang digunakan
+## Tools dan Packages yang Digunakan
 
 1. [Git](https://git-scm.com)
 2. [Docker](https://www.docker.com)
@@ -30,7 +30,7 @@ Peserta dapat menampilkan message hello world dalam format JSON pada url http://
 4. [Air](https://github.com/cosmtrek/air)
 5. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
 
-## Menginstal Tools yang digunakan
+## Menginstal Tools yang Digunakan
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - Docker
