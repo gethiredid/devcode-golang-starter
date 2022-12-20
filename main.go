@@ -21,10 +21,10 @@ func main() {
 	PORT := getEnv("PORT", "3030")
 	router := mux.NewRouter()
 
-	router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(map[string]string{"message": "Hello world"})
-	})
+	// router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
+	// 	w.Header().Set("Content-Type", "application/json")
+	// 	json.NewEncoder(w).Encode(map[string]string{"message": "Hello world"})
+	// })
 
 	log.Println("API is running on port " + PORT)
 	http.ListenAndServe(":"+PORT, router)
