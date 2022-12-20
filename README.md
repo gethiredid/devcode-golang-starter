@@ -1,71 +1,80 @@
-# Devcode golang starter with mux
+# Devcode Starter using Golang and Mux Level 1
 
-## Hasil akhir yang diharapkan
+## Hasil Akhir yang Diharapkan
 
-Peserta dapat submit challenge di devcode menggunakan docker.
+Peserta dapat menampilkan message hello world dalam format JSON pada url http://localhost:3030/hello dan submit challenge di Devcode menggunakan Docker
 
-## Instruksi pengerjaan
+## Setup Environment
 
-Pastikan anda sudah menginstall Tools yang diperlukan. Kemudian coba jalankan projek, setelah projek jalan anda bisa mentesting projek secara lokal menggunakan docker. Pastikan semua test case berhasil dijalankan tanpa error, setelah itu anda bisa push projek ke docker hub. Kemudian submit ke Devcode dengan image docker yang telah di push ke docker hub.
+1. Download source code melalui link yang telah disediakan dari halaman assesment
+2. Extract source code yang sudah terdownload pada perangkat anda
+3. Buka source code yang sudah diextract menggunakan Code Editor, contoh Visual Studio Code
+4. Salin isi dari file `.env.example` ke dalam file `.env`
+5. install air `go install github.com/cosmtrek/air@latest` untuk menjalankan golang dengan mode development
+6. Jalankan `go mod download` pada terminal untuk install packages
+7. Jalankan `go run main.go` atau `air` untuk mode development pada terminal
 
-## Tools yang di perlukan
+## Instruksi Pengerjaan
 
-- Git
-- Docker 
+1. Pastikan anda sudah meng-install tools yang diperlukan. Jika belum, silahkan ikuti langkah-langkahnya [disini](#menginstal-tools-yang-digunakan)
+2. Jalankan API dan Database dengan Docker, silahkan ikuti langkah-langkahnya [disini](#menjalankan-api-dan-database-dengan-docker)
+3. Uncomment baris kode yang terdapat pada file`main.go`
+4. Lakukan unit testing pada local anda dengan menggunakan Docker, langkah-langkahnya dapat dilihat [disini](#menjalankan-unit-testing-dengan-Docker)
+5. Push projek ke docker hub setelah semua test case berhasil dijalankan, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
+6. Submit image docker yang telah dipush ke Docker Hub ke Halaman Submission Devcode, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 
-### Cara menginstall Tools
+## Tools dan Packages yang Digunakan
+
+1. [Git](https://git-scm.com)
+2. [GoLang](https://go.dev)
+3. [Docker](https://www.docker.com)
+4. [Mux](https://pkg.go.dev/github.com/gorilla/mux)
+5. [Air](https://github.com/cosmtrek/air)
+6. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
+
+## Menginstal Tools yang Digunakan
 
 - [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- Docker
+  - [Windows](https://docs.docker.com/desktop/install/windows-install/)
+  - [Mac](https://docs.docker.com/desktop/install/mac-install/)
+  - [Linux](https://docs.docker.com/desktop/install/linux-install/)
 
-- Docker : 
-    - [Windows](https://docs.docker.com/desktop/install/windows-install/)
-    - [Mac](https://docs.docker.com/desktop/install/mac-install/)
-    - [Linux](https://docs.docker.com/desktop/install/linux-install/)
-
-## Package yang digunakan
-
-- mux
-- air
-- godotenv
-
-## Docker
+## Menjalankan API dan Database dengan Docker
 
 Jika anda sudah menginstall docker, anda bisa menjalankan perintah `docker-compose up -d` untuk menjalankan API <b>Contact Manager</b> dan juga database <b>Mysql</b>. Tetapi pastikan `environment` pada file .env yang telah kamu buat dari .env.example sesuai dengan `environment` pada file `docker-compose.yaml`.
 
 Apabila ada perubahan pada file kodingan anda, anda bisa build ulang container dengan perintah :
+
 ```
 docker-compose up -d --force --recreate
-``` 
+```
 
-
-## Menjalankan projek
-
-- copy `.env.example` to `.env`
-- install air `go install github.com/cosmtrek/air@latest` untuk menjalankan golang dengan mode development
-- install package `go mod download`
-- jalankan projek dengan perintah `go run main.go` atau `air` untuk mode development
-
-# Menjalankan unit testing dengan docker
+## Menjalankan Unit Testing dengan Docker
 
 Pastikan docker sudah terinstall di komputer anda. Jika belum silahkan install terlebih dahulu mengikuti instruksi dari tutorial diatas.
 
-## Build docker image
-Jalankan perintah berikut untuk Build docker image  `docker build . -t {name}`
+### Build Docker Image
+
+Jalankan perintah berikut untuk Build docker image `docker build . -t {name}`
 
 contoh :
+
 ```
 docker build . -t golang-hello
 ```
 
-## Jalankan docker image
+### Jalankan Docker Image
+
 Jalankan docker image dengan perintah `docker run -e PORT=3030 -p 3030:3030 {docker image}`
 
-contoh: 
+contoh:
+
 ```
 docker run -e PORT=3030 -p 3030:3030 golang-hello
 ```
 
-### Jalankan unit testing
+## Jalankan Unit Testing
 
 pastikan port ketika menjalankan docker image sama dengan `API_URL` ketika ingin menjalankan unit testing
 
@@ -73,17 +82,20 @@ pastikan port ketika menjalankan docker image sama dengan `API_URL` ketika ingin
 docker run --network="host" -e API_URL=http://localhost:3030 -e LEVEL=1 alfi08/hello-unit-testing
 ```
 
+## Submit ke Devcode
 
-# Submit ke Devcode
-## Build docker image
-Jalankan perintah berikut untuk Build docker image  `docker build . -t {name}`
+### Build Docker Image
+
+Jalankan perintah berikut untuk Build docker image `docker build . -t {name}`
 
 contoh :
+
 ```
 docker build . -t golang-hello
 ```
 
-## Push projek ke docker hub
+### Push projek ke Docker Hub
+
 Pastikan sudah memiliki akun docker hub, dan login akun docker anda di lokal dengan perintah `docker login`.
 
 Setelah itu jalankan perintah berikut untuk push docker image lokal ke docker hub.
