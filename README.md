@@ -27,7 +27,7 @@ Peserta dapat mengubah dan menghapus data kontak yang terhubung dengan database
 8. Push projek ke docker hub setelah semua test case berhasil dijalankan, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 9. Submit image docker yang telah dipush ke Docker Hub ke Halaman Submission Devcode, langkah-langkahnya dapat dilihat [disini](#push-projek-ke-docker-hub)
 
-## Tools dan Packages yang Digunakan
+## Teknologi yang Digunakan
 
 1. [Git](https://git-scm.com)
 2. [GoLang](https://go.dev)
