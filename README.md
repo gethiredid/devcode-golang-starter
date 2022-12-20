@@ -26,10 +26,11 @@ Peserta dapat menampilkan message hello world dalam format JSON pada url http://
 ## Tools dan Packages yang Digunakan
 
 1. [Git](https://git-scm.com)
-2. [Docker](https://www.docker.com)
-3. [Mux](https://pkg.go.dev/github.com/gorilla/mux)
-4. [Air](https://github.com/cosmtrek/air)
-5. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
+2. [GoLang](https://go.dev)
+3. [Docker](https://www.docker.com)
+4. [Mux](https://pkg.go.dev/github.com/gorilla/mux)
+5. [Air](https://github.com/cosmtrek/air)
+6. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
 
 ## Menginstal Tools yang Digunakan
 
