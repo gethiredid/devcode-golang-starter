@@ -16,7 +16,7 @@ Peserta dapat membuat dan menampilkan data kontak dengan menggunakan local varia
 
 ## Instruksi Pengerjaan
 
-1. Pastikan anda sudah meng-install tools yang diperlukan. Jika belum, silahkan ikuti langkah-langkahnya [disini](#menginstal-tools-yang-diperlukan)
+1. Pastikan anda sudah meng-install tools yang diperlukan. Jika belum, silahkan ikuti langkah-langkahnya [disini](#menginstal-tools-yang-digunakan)
 2. Jalankan API dan Database dengan Docker, silahkan ikuti langkah-langkahnya [disini](#menjalankan-api-dan-database-dengan-docker)
 3. Sesuaikan request dan response pada route GET `/contacts` pada file `main.go` sesuai dengan [Dokumentasi API](https://documenter.getpostman.com/view/6584319/2s8Yt1rUtN) pada Postman
 4. Sesuaikan request dan response pada route POST `/contacts` pada file `main.go` sesuai dengan [Dokumentasi API](https://documenter.getpostman.com/view/6584319/2s8Yt1rUtN) pada Postman
@@ -27,10 +27,11 @@ Peserta dapat membuat dan menampilkan data kontak dengan menggunakan local varia
 ## Tools dan Packages yang Digunakan
 
 1. [Git](https://git-scm.com)
-2. [Docker](https://www.docker.com)
-3. [Mux](https://pkg.go.dev/github.com/gorilla/mux)
-4. [Air](https://github.com/cosmtrek/air)
-5. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
+2. [GoLang](https://go.dev)
+3. [Docker](https://www.docker.com)
+4. [Mux](https://pkg.go.dev/github.com/gorilla/mux)
+5. [Air](https://github.com/cosmtrek/air)
+6. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
 
 ## Menginstal Tools yang Digunakan
 
