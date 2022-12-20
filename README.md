@@ -10,9 +10,10 @@ Peserta dapat mengubah dan menghapus data kontak yang terhubung dengan database
 2. Extract source code yang sudah terdownload pada perangkat anda
 3. Buka source code yang sudah diextract menggunakan Code Editor, contoh Visual Studio Code
 4. Salin isi dari file `.env.example` ke dalam file `.env`
-5. install air `go install github.com/cosmtrek/air@latest` untuk menjalankan golang dengan mode development
-6. Jalankan `go mod download` pada terminal untuk install packages
-7. Jalankan `go run main.go` atau `air` untuk mode development pada terminal
+5. Lakukan migrasi database dengan mengikuti langkah-langkahnya yang bisa dilihat [disini](#migrasi-database)
+6. install air `go install github.com/cosmtrek/air@latest` untuk menjalankan golang dengan mode development
+7. Jalankan `go mod download` pada terminal untuk install packages
+8. Jalankan `go run main.go` atau `air` untuk mode development pada terminal
 
 ## Instruksi Pengerjaan
 
