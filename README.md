@@ -33,6 +33,7 @@ Peserta dapat membuat dan menampilkan data kontak yang terkoneksi dengan databas
 4. [Mux](https://pkg.go.dev/github.com/gorilla/mux)
 5. [Air](https://github.com/cosmtrek/air)
 6. [GoDotEnv](https://pkg.go.dev/github.com/joho/godotenv#section-readme)
+7. [GORM](https://gorm.io)
 
 ## Menginstal Tools yang Digunakan
 
