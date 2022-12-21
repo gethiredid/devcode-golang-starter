@@ -21,6 +21,7 @@ func main() {
 	PORT := getEnv("PORT", "3030")
 	router := mux.NewRouter()
 
+	// TODO: Uncomment baris kode dibawah ini
 	// router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
 	// 	w.Header().Set("Content-Type", "application/json")
 	// 	json.NewEncoder(w).Encode(map[string]string{"message": "Hello world"})
