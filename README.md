@@ -55,6 +55,11 @@ Apabila ada perubahan pada file kodingan anda, anda bisa build ulang container d
 docker-compose up -d --build --force-recreate
 ```
 
+## Koneksi Database
+
+Anda bebas menggunakan libary apapun untuk membuat koneksi pada database. Projek starter ini menggunakan `gorm` untuk mengurus database.
+Jika ingin menggunakan database lainnya selain Mysql, silahkan akses link dokumentasi berikut [gorm](https://gorm.io/docs/connecting_to_the_database.html).
+
 ## Migrasi Database
 
 Projek ini menggunakan package `gorm` untuk mengurus database.
