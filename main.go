@@ -8,28 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
 )
-
-type Contact struct {
-	Id           int64  `gorm:"primaryKey" json:"id"`
-	Full_name    string `gorm:"type:varchar(255)" json:"full_name"`
-	Phone_number string `gorm:"type:varchar(255)" json:"phone_number"`
-	Email        string `gorm:"type:varchar(255)" json:"email"`
-}
-
-type ResItems struct {
-	Status  string    `json:"status"`
-	Message string    `json:"message,omitempty"`
-	Items   []Contact `json:"data"`
-}
-
-type ResItem struct {
-	Status  string  `json:"status"`
-	Message string  `json:"message,omitempty"`
-	Item    Contact `json:"data"`
-}
 
 func main() {
 	// load env
@@ -38,23 +17,7 @@ func main() {
 		log.Fatal("Error loading .env file")
 	}
 
-	// get env
 	PORT := getEnv("PORT", "3030")
-	MYSQL_USER := getEnv("MYSQL_USER", "root")
-	MYSQL_PASSWORD := getEnv("MYSQL_PASSWORD", "")
-	MYSQL_HOST := getEnv("MYSQL_HOST", "127.0.0.1")
-	MYSQL_PORT := getEnv("MYSQL_PORT", "3306")
-	MYSQL_DBNAME := getEnv("MYSQL_DBNAME", "dbname")
-
-	var DB *gorm.DB
-	conString := MYSQL_USER + ":" + MYSQL_PASSWORD + "@tcp(" + MYSQL_HOST + ":" + MYSQL_PORT + ")/" + MYSQL_DBNAME
-	db, err := gorm.Open(mysql.Open(conString))
-	if err != nil {
-		panic(err)
-	}
-	db.AutoMigrate(&Contact{}) // 👈 run migration
-	DB = db
-
 	router := mux.NewRouter()
 
 	router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
@@ -65,44 +28,9 @@ func main() {
 	})
 
 	// get all contacts
-	router.HandleFunc("/contacts", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-
-		var contacts []Contact
-
-		// TODO: ambil semua data kontak dari database
-
-		res := ResItems{
-			Status: "Success",
-			Items:  contacts,
-		}
-
-		response, _ := json.Marshal(res)
-		w.Write(response)
-	}).Methods("GET")
-
+	router.HandleFunc("/contacts", getAllContacts).Methods("GET")
 	// create contacts
-	router.HandleFunc("/contacts", func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
-
-		var newContact Contact
-		json.NewDecoder(r.Body).Decode(&newContact)
-
-		// TODO: simpan data dari request body kedalam database
-
-		res := ResItem{
-			Status:  "Success",
-			Message: "Contact created",
-			Item:    newContact,
-		}
-
-		response, _ := json.Marshal(res)
-
-		w.Write(response)
-
-	}).Methods("POST")
+	router.HandleFunc("/contacts", createContact).Methods("POST")
 
 	log.Println("API is running on port " + PORT)
 	http.ListenAndServe(":"+PORT, router)
